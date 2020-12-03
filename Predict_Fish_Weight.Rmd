@@ -41,9 +41,21 @@ We are using a numerical~numerical because all of the variables we are looking a
 ### Graphical Descriptive Results
 
 ```{r}
-Fishies=filter(Fishdata, Species == "Perch")
-Fishies = select(Fishies,-(Species))
-pairs(Fishies)
+FishiesP=filter(Fishdata, Species == "Perch")
+FishiesP = select(FishiesP,-(Species))
+pairs(FishiesP)
+```
+
+```{r}
+FishiesB=filter(Fishdata, Species == "Bream")
+FishiesB = select(FishiesB,-(Species))
+pairs(FishiesB)
+```
+
+```{r}
+FishiesS=filter(Fishdata, Species == "Smelt")
+FishiesS = select(FishiesS,-(Species))
+pairs(FishiesS)
 ```
 
 
@@ -52,22 +64,70 @@ pairs(Fishies)
 ### Numerical Descriptive Results
 
 ```{r}
-summary(Fishies)
+summary(FishiesP)
+```
+```{r}
+summary(FishiesB)
 ```
 
+```{r}
+summary(FishiesS)
+```
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 ```{r}
-Perchmodel=lm(Weight~Length2+Width,data=Fishies)
+Perchmodel=lm(Weight~Height+Width,data=FishiesP)
 summary(Perchmodel)
+```
+
+```{r}
+Breammodel=lm(Weight~Length2+Height,data=FishiesB)
+summary(Breammodel)
+```
+
+```{r}
+Smeltmodel=lm(Weight~Length2+Height,data=FishiesS)
+summary(Smeltmodel)
 ```
 
 ```{r}
 library(leaps)
 regsubsets.out <-
     regsubsets(Weight ~ .,
-               data = Fishies,
+               data = FishiesP,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = FishiesB,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = FishiesS,
                nbest = 1,       # 1 best model for each number of predictors
                nvmax = NULL,    # NULL for no limit on number of variables
                force.in = NULL, force.out = NULL,
