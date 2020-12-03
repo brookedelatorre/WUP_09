@@ -24,9 +24,9 @@ Fishdata=read.csv("Fish.csv",header = TRUE)
 
 We are trying to explain if weight has a difference based on their length and width through the use of graphs. 
 
-$H_0$:There is a difference in weight caused by length, width, or height. 
+$H_0$:There is no difference in the weight of the fish caused by length, width, or height. 
 
-$H_A$:There is no difference in weight caused by length, width, or height. 
+$H_A$:There is a difference in the weight of the fish caused by length, width, or height. 
 
 ## Build the best regression model you can that predicts the weight of perch
 ## Using only two predictor variables  
@@ -51,7 +51,7 @@ FishiesP = select(FishiesP,-(Species))
 pairs(FishiesP)
 ```
 
-As the graph shows the Length 2 and the width show the most linearity.
+As the graph for the Perch shows the Length 2 and the width show the most linearity.
 
 ```{r}
 FishiesB=filter(Fishdata, Species == "Bream")
@@ -59,7 +59,7 @@ FishiesB = select(FishiesB,-(Species))
 pairs(FishiesB)
 ```
 
-As the graph shows the Length 2 and the height show the most linearity.
+As the graph for the Bream shows the Length 2 and the height show the most linearity.
 
 ```{r}
 FishiesS=filter(Fishdata, Species == "Smelt")
@@ -67,7 +67,7 @@ FishiesS = select(FishiesS,-(Species))
 pairs(FishiesS)
 ```
 
-As the graph shows the Length 2 and the height show the most linearity.
+As the graph for the Smelt shows the Length 2 and the height show the most linearity.
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
@@ -77,19 +77,19 @@ As the graph shows the Length 2 and the height show the most linearity.
 summary(FishiesP)
 ```
   
-The summary of the Perch data shows that all lengths have a min around 8 and a median around 23. All quartiles are in the same range of eachother for the lengths. 
+The summary of the Perch data shows that all lengths have a min around 8 and a median around 23. All quartiles for lengths are in the same range of eachother. 
   
 ```{r}
 summary(FishiesB)
 ```
 
-The summary of the Breech data shows numerical data of a box and whisker plot. It shows the minimum, median, and mean of each numerical data set broken up.
+The summary of the Bream data shows that length 1 and 2 are similar in all areas however, length 3 strays further away from both in the numerical data. 
 
 ```{r}
 summary(FishiesS)
 ```
 
-The summary of the Smelt data shows numerical data of a box and whisker plot. It shows the minimum, median, and mean of each numerical data set broken up.
+The summary of the Smelt data shows that length 1, 2, and 3 are similar in all areas in the numerical data. 
 
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
@@ -110,7 +110,7 @@ library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
 ```
 
-
+Based on the graphs for the Perch it appears that height and width have the highest adjusted R^2.
 
 ```{r}
 library(leaps)
@@ -128,7 +128,7 @@ library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
 ```
 
-
+Based on the graphs for the Bream it appears that length2 and height have the highest adjusted R^2.
 
 ```{r}
 library(leaps)
@@ -146,6 +146,8 @@ library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
 ```
 
+Based on the graphs for the Smelt it appears that length2 and height have the highest adjusted R^2.
+
 ## Inferential Results
 
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
@@ -155,15 +157,25 @@ Perchmodel=lm(Weight~Height+Width,data=FishiesP)
 summary(Perchmodel)
 ```
 
+The P-value is less than 0.05 meaning we are going to reject the null hypothesis. 
+
+
 ```{r}
 Breammodel=lm(Weight~Length2+Height,data=FishiesB)
 summary(Breammodel)
 ```
 
+The P-value is less than 0.05 meaning we are going to reject the null hypothesis. 
+
 ```{r}
 Smeltmodel=lm(Weight~Length2+Height,data=FishiesS)
 summary(Smeltmodel)
 ```
+
+The P-value is less than 0.05 meaning we are going to reject the null hypothesis. 
+
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+The P-value is less than 0.05 for all three of the fish types this means that we reject the null hypothesis. So we are going to accept the alternative hypothesis There is a difference in the weight of the fish caused by length, width, or height. As seen in the R^2 graphs each fish shows their own specific data correlating in height and length. The perch shows better results in height and width while the oher two fish are length2 and height. 
