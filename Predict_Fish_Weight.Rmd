@@ -24,6 +24,10 @@ Fishdata=read.csv("Fish.csv",header = TRUE)
 
 We are trying to explain if weight has a difference based on their length and width through the use of graphs. 
 
+$H_0$:There is a difference in weight caused by length, width, or height. 
+
+$H_A$:There is no difference in weight caused by length, width, or height. 
+
 ## Build the best regression model you can that predicts the weight of perch
 ## Using only two predictor variables  
 
@@ -72,16 +76,22 @@ As the graph shows the Length 2 and the height show the most linearity.
 ```{r}
 summary(FishiesP)
 ```
+  
+The summary of the Perch data shows that all lengths have a min around 8 and a median around 23. All quartiles are in the same range of eachother for the lengths. 
+  
 ```{r}
 summary(FishiesB)
 ```
+
+The summary of the Breech data shows numerical data of a box and whisker plot. It shows the minimum, median, and mean of each numerical data set broken up.
 
 ```{r}
 summary(FishiesS)
 ```
 
-<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
+The summary of the Smelt data shows numerical data of a box and whisker plot. It shows the minimum, median, and mean of each numerical data set broken up.
 
+<!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 
 ```{r}
@@ -100,6 +110,8 @@ library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
 ```
 
+
+
 ```{r}
 library(leaps)
 regsubsets.out <-
@@ -115,6 +127,8 @@ as.data.frame(summary.out$outmat)
 library(car)
 subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
 ```
+
+
 
 ```{r}
 library(leaps)
